@@ -6,22 +6,17 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ onSubmit }: SearchBarProps) {
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Функція, яка буде передана в action форми
+  async function handleAction(formData: FormData) {
+    const query = formData.get("query")?.toString().trim() || "";
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const query = formData.get("query") as string;
-
-    if (!query.trim()) {
-       toast.error("Please enter your search query.");
-
+    if (!query) {
+      toast.error("Please enter your search query.");
       return;
     }
 
-    onSubmit(query.trim());
-    form.reset();
-  };
+    onSubmit(query);
+  }
 
   return (
     <header className={styles.header}>
@@ -34,7 +29,7 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
         >
           Powered by TMDB
         </a>
-        <form className={styles.form} onSubmit={handleSearch}>
+        <form className={styles.form} action={handleAction}>
           <input
             className={styles.input}
             type="text"
