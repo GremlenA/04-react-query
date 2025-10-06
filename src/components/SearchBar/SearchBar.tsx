@@ -6,7 +6,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ onSubmit }: SearchBarProps) {
-  // Функція, яка буде передана в action форми
+
   async function handleAction(formData: FormData) {
     const query = formData.get("query")?.toString().trim() || "";
 
